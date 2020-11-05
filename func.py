@@ -11,10 +11,7 @@ def encrypt(mensaje):
     
     #Se necesita que ambos numeros primos esten alejados
     prime1 = generatePrime(500, 1000) #Numeros entre 500 y 1000
-    prime2 = generatePrime(1500, 2000) #Numeros entre 5000 y 7000
-    
-    prime1 = 773
-    prime2 = 907
+    prime2 = generatePrime(3000, 3500) #Numeros entre 3000 y 3500
     
     n = prime1*prime2 #Se multiplican los numeros primos
     lcm = lcm(prime1-1, prime2-1) #Se busca el mcm de los numeros-1
@@ -35,7 +32,8 @@ def generatePrime(rango1, rango2):
         possiblePrime = randint(rango1, rango2) #Numeros entre rango1 y rango2
         
         for i in range(2, possiblePrime): 
-            if possiblePrime % i == 0: 
+            if possiblePrime % i == 0:
+                generate = True
                 break
             else:
                 generate = False
