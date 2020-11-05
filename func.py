@@ -10,7 +10,10 @@ def encrypt(mensaje):
     
     #Se necesita que ambos numeros primos esten alejados
     prime1 = generatePrime(500, 1000) #Numeros entre 500 y 1000
-    prime2 = generatePrime(2000, 2500) #Numeros entre 2000 y 2500
+    prime2 = generatePrime(5000, 7000) #Numeros entre 5000 y 7000
+    
+    prime1 = 773
+    prime2 = 907
     
     n = prime1*prime2 #Se multiplican los numeros primos
     lcm = lcm(prime1-1, prime2-1) #Se busca el mcm de los numeros-1
@@ -52,18 +55,13 @@ def lcm(primo1, primo2):
     
 #Se genera la llave publica
 def publicKey(lcm):
-    e = randint(1, lcm) #Se genera la llave entre 1 y el mcm
+    e = 65537 #Numero definido para e
     return e
 
 #Se genera el ciphertext
 def ciphertext(mensaje, e, n):
     c = (mensaje**e)%n
     return c #Encriptado del mensaje
-
-#
-# DE AQUÍ PARA ABAJO ES LO QUE FALLA
-# Hice como mil pruebas del cifrado y estoy 100% segura de que cada paso sirve
-#
 
 #Se genera la llave privada
 def privateKey():
@@ -77,6 +75,7 @@ def mod_Inv(x,y):
     for i in range(y):
         if (x*i)%y==1:
             return i #Se retorna
+    return 1
         
 #Se desencripta
 def decrypt(privateKey):
@@ -85,5 +84,5 @@ def decrypt(privateKey):
     return mensaje #Mensaje descifrado
 
 
-print("Encriptado ", encrypt(4))
+print("Encriptado ", encrypt(10))
 print("Discifrado ", decrypt(privateKey()))
