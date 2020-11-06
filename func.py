@@ -1,4 +1,5 @@
 from random import *
+import math
 
 e = 0 #Es global porque se usa para privateKey
 lcm = 0 #Es global porque se usa para privateKey
@@ -10,17 +11,17 @@ def encrypt(mensaje):
     
     #Se necesita que ambos numeros primos esten alejados
     prime1 = generatePrime(500, 1000) #Numeros entre 500 y 1000
-    prime2 = generatePrime(5000, 7000) #Numeros entre 5000 y 7000
-    
-    prime1 = 773
-    prime2 = 907
+    prime2 = generatePrime(3000, 3500) #Numeros entre 3000 y 3500
     
     n = prime1*prime2 #Se multiplican los numeros primos
     lcm = lcm(prime1-1, prime2-1) #Se busca el mcm de los numeros-1
+    e = publicKey() #e
     
-    e = publicKey(lcm) #e se genera con el mcm
-    
-    c = ciphertext(mensaje, e, n) #Se genera el cifrado
+    if(isinstance(mensaje, int) == False): #Si es palabra
+        letras = list(mensaje)
+        c = encryptWord(letras, e, n)
+    else:
+        c = ciphertext(mensaje, e, n) #Se genera el cifrado
     
     return c #Se retorna el mensaje cifrado
 
@@ -30,12 +31,13 @@ def generatePrime(rango1, rango2):
     while(generate): #Se busca numero primo hasta encontrarlo
         possiblePrime = randint(rango1, rango2) #Numeros entre rango1 y rango2
         
-        #Revisando si es numero primo
-        for divisor in range(2, possiblePrime):
-            if (possiblePrime % divisor) == 0: 
-                break #No es primo
+        for i in range(2, possiblePrime): 
+            if possiblePrime % i == 0:
+                generate = True
+                break
             else:
-                generate = False #Si es primo
+                generate = False
+    
     return possiblePrime #Se retorna
         
         
@@ -54,7 +56,7 @@ def lcm(primo1, primo2):
     return mayor #Es el mcm
     
 #Se genera la llave publica
-def publicKey(lcm):
+def publicKey():
     e = 65537 #Numero definido para e
     return e
 
@@ -62,6 +64,16 @@ def publicKey(lcm):
 def ciphertext(mensaje, e, n):
     c = (mensaje**e)%n
     return c #Encriptado del mensaje
+
+#Si es una lista
+def encryptWord(letras, e, n):
+    for i in range(len(letras)):
+        a = ord(letras[i]) #Se convierte a int
+        c = (a**e)%n
+        
+        letras[i] = c #Se cambia la letra al cifrado
+    
+    return letras #Se regresa la lista con enteros cifrados
 
 #Se genera la llave privada
 def privateKey():
@@ -75,14 +87,22 @@ def mod_Inv(x,y):
     for i in range(y):
         if (x*i)%y==1:
             return i #Se retorna
-    return 1
         
 #Se desencripta
 def decrypt(privateKey):
     global c, n
-    mensaje = (c**privateKey)%n
+    
+    try:
+        mensaje = (c**privateKey)%n #Se descifra
+    except:
+        listado = [None] * len(c)
+        for i in range(len(c)):
+            listado[i] = (c[i]**privateKey)%n #Se descifra
+            listado[i] = chr(listado[i]) #Se pasa a letra
+        mensaje = ''.join(listado)
+        
     return mensaje #Mensaje descifrado
 
-
-print("Encriptado ", encrypt(10))
-print("Discifrado ", decrypt(privateKey()))
+#con letras
+print("Encriptado ", encrypt("andrea"))
+print("Descifrado ", decrypt(privateKey()))
