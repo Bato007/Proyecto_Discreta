@@ -39,19 +39,13 @@ Button(text = 'Desencriptar', bg='lime green', fg='black').place(x = 185,y = 240
 
 
 
-
+#Diseño de imagen
 img = Image.open("imagen.jpg")
 img = img.resize((275,150), Image.ANTIALIAS)
 my_image =  ImageTk.PhotoImage(img)
 
 lbl = Label(image = my_image).place(x=101,y=290)
 
-#Out_put del cifrado
-#out_put = Text(frame, width=20, height=10)
-#out_put.grid(row=4, column=0, padx=10, pady=10)
-#scroll_out = Scrollbar(frame, command=out_put.yview)
-#scroll_out.grid(row=4, column=1, sticky="nsew")
-#out_put.config(yscrollcommand=scroll_out.set)
 
 
 # Termina Frame
