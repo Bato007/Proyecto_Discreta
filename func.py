@@ -5,6 +5,7 @@ e = 0 #Es global porque se usa para privateKey
 lcm = 0 #Es global porque se usa para privateKey
 n = 0 #Es global porque se usa para descifrar
 c = 0 #Es global porque se usa para descifrar
+d = 0 #Es global porque se usa para descifrar
 
 def encrypt(mensaje):
     global n, lcm, e, c
@@ -15,7 +16,6 @@ def encrypt(mensaje):
     
     n = prime1*prime2 #Se multiplican los numeros primos
     lcm = lcm(prime1-1, prime2-1) #Se busca el mcm de los numeros-1
-    e = publicKey() #e
     
     if(isinstance(mensaje, int) == False): #Si es palabra
         letras = list(mensaje)
@@ -57,8 +57,17 @@ def lcm(primo1, primo2):
     
 #Se genera la llave publica
 def publicKey():
+    global e
     e = 65537 #Numero definido para e
     return e
+
+#Se checkea si ya genero la llave
+def checkPublicKey():
+    global e
+    if e == 65537:
+        return True
+    else:
+        return False
 
 #Se genera el ciphertext
 def ciphertext(mensaje, e, n):
@@ -77,10 +86,17 @@ def encryptWord(letras, e, n):
 
 #Se genera la llave privada
 def privateKey():
-    global e, lcm
-    print("Este es e" , e, "Este es el mcm", lcm)
+    global e, lcm, d
     d = mod_Inv(e, lcm) #modular inverso
     return d #Llave para descifrar
+
+#Se checkea si ya genero la llave
+def checkPrivateKey():
+    global d
+    if d!=0:
+        return True
+    else:
+        return False
 
 #Modular inverso
 def mod_Inv(x,y):
@@ -89,22 +105,16 @@ def mod_Inv(x,y):
             return i #Se retorna
         
 #Se desencripta
-def decrypt(privateKey):
-    global c, n
+def decrypt():
+    global c, n, d
     
     try:
-        mensaje = (c**privateKey)%n #Se descifra
+        mensaje = (c**d)%n #Se descifra
     except:
         listado = [None] * len(c)
         for i in range(len(c)):
-            listado[i] = (c[i]**privateKey)%n #Se descifra
+            listado[i] = (c[i]**d)%n #Se descifra
             listado[i] = chr(listado[i]) #Se pasa a letra
         mensaje = ''.join(listado)
         
     return mensaje #Mensaje descifrado
-
-
-
-#con letras
-#print("Encriptado ", encrypt("andrea"))
-#print("Descifrado ", decrypt(privateKey()))
