@@ -1,5 +1,5 @@
 from random import *
-import math
+import os 
 
 e = 0 #Es global porque se usa para privateKey
 lcm = 0 #Es global porque se usa para privateKey
@@ -103,6 +103,8 @@ def decrypt(privateKey):
         
     return mensaje #Mensaje descifrado
 
+
+
 #con letras
-print("Encriptado ", encrypt("andrea"))
-print("Descifrado ", decrypt(privateKey()))
+#print("Encriptado ", encrypt("andrea"))
+#print("Descifrado ", decrypt(privateKey()))
