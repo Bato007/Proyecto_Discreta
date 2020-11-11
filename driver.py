@@ -47,7 +47,7 @@ def encryptTxt():
             f= open("encrypt.txt","w+") #Se crea un nuevo txt encrypt
         
         for line in Lines: 
-            txtEncriptado = encrypt(''.join(line)) #Se encripta
+            txtEncriptado = encrypt(str(''.join(line))) #Se encripta
             listToString = ''.join([str(elem) for elem in txtEncriptado]) #Se pasa de lista de ints a string
             f.write(listToString) #Se escribe
         
