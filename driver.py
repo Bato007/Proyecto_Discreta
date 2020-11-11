@@ -109,9 +109,9 @@ def closing():
 
 #Diseño y funcionamiento de los botones
 Button(text = 'Llave publica', bg='gold', fg='black', command=writePublicKey).place(x = 185, y = 105)
-Button(text = '  Encriptar  ', bg='coral', fg='black', command=encryptTxt).place(x = 185,y = 150) #recibe txt con texto a desencriptar
+Button(text = '   Encriptar    ', bg='coral', fg='black', command=encryptTxt).place(x = 185,y = 150) #recibe txt con texto a desencriptar
 Button(text = 'Llave privada', bg='light sea green', fg='black', command=writePrivateKey).place(x = 185,y = 195)
-Button(text = 'Desencriptar', bg='lime green', fg='black', command=writeDecrypt).place(x = 185,y = 240)
+Button(text = 'Desencriptar ', bg='lime green', fg='black', command=writeDecrypt).place(x = 185,y = 240)
 
 
 #Diseño de imagen
